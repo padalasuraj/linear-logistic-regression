@@ -1,24 +1,24 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
-class LinearRegression:
-    def __init__(self, learning_rate=0.01, epochs=1000):
-        self.learning_rate = learning_rate
-        self.epochs = epochs
-        self.weights = None
-        self.bias = None
+# Sample data
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([2, 4, 6, 8, 10])
 
-    def fit(self, X, y):
-        n_samples, n_features = X.shape
-        self.weights = np.zeros(n_features)
-        self.bias = 0
+# Initialize and train the model
+model = LinearRegression()
+model.fit(X, y)
 
-        for _ in range(self.epochs):
-            y_predicted = np.dot(X, self.weights) + self.bias
-            dw = (1 / n_samples) * np.dot(X.T, (y_predicted - y))
-            db = (1 / n_samples) * np.sum(y_predicted - y)
+# Make predictions
+predictions = model.predict(X)
 
-            self.weights -= self.learning_rate * dw
-            self.bias -= self.learning_rate * db
-
-    def predict(self, X):
-        return np.dot(X, self.weights) + self.bias
+# Plotting
+plt.scatter(X, y, color='blue', label='Data Points')
+plt.plot(X, predictions, color='red', label='Regression Line')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.title('Linear Regression')
+plt.legend()
+plt.grid(True)
+plt.show()
